@@ -21,7 +21,8 @@ struct SongModel: Hashable {
 
 extension SongModel {
     init(from song: ManagedSong) {
-        self.title = song.title ?? ""
-        self.composer = song.composer ?? ""
+        id = song.id
+        title = song.title ?? ""
+        composer = song.composer ?? ""
     }
 }

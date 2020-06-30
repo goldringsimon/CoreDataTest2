@@ -18,8 +18,9 @@ struct FolderModel: Hashable {
 
 extension FolderModel {
     init(from folder: ManagedFolder) {
-        self.name = folder.name ?? ""
-        self.color = folder.color as? UIColor
+        id = folder.id
+        name = folder.name ?? ""
+        color = folder.color as? UIColor
         if let songs = folder.songs?.array as? [ManagedSong] {
             self.songs = songs.map({ SongModel(from: $0) })
         } else {

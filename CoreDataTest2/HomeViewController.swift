@@ -58,7 +58,7 @@ class HomeViewController: UIViewController {
         //fetchedResultsController.delegate = self
         //configureSampleData()
         
-        repStore = MockRepStore()
+        repStore = CoreDataRepStore()
         
         cancellable = repStore.foldersPublisher.sink(receiveValue: { [weak self] folderModels in
             var newSnapshot = NSDiffableDataSourceSnapshot<SectionType, ItemType>()
