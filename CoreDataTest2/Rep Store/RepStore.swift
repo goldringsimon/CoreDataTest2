@@ -16,6 +16,8 @@ protocol WriteableRepStore {
     func addFolder(folder: FolderModel)
     func addSong(add song: SongModel, to folder: FolderModel)
     func addSongRandomly(song: SongModel)
+    
+    @discardableResult func deleteSong(song: SongModel, from folder: FolderModel?) -> Bool
 }
 
 typealias RepStore = ReadableRepStore & WriteableRepStore

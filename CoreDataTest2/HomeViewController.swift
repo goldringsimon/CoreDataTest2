@@ -13,37 +13,11 @@ import Combine
 class HomeViewController: UIViewController {
     let reuseIdentifier = "reuse-id"
     
-    /*lazy var fetchedResultsController: NSFetchedResultsController<RepFolders> = {
-        let fetchRequest: NSFetchRequest<RepFolders> = RepFolders.fetchRequest()
-        //fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-        fetchRequest.sortDescriptors = []
-        
-        let controller = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                                    managedObjectContext: modelController.persistentContainer.viewContext,
-                                                    sectionNameKeyPath: nil, cacheName: nil)
-        controller.delegate = self
-        
-        do {
-            try controller.performFetch()
-        } catch {
-            fatalError("###\(#function): Failed to performFetch: \(error)")
-        }
-        
-        return controller
-    }()*/
-    
     typealias SectionType = String
     typealias ItemType = SongModel
     
-    //var modelController: ModelController!
-    
     var tableView: UITableView!
     var dataSource: DataSource!
-    
-    /*var repFolders: RepFolders!
-    var repBook: Folder!
-    var inProgress: Folder!
-    var stillToLearn: Folder!*/
     
     var repStore: RepStore!
     var cancellable: AnyCancellable?
@@ -51,14 +25,11 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //configureModelController()
         configureHierarchy()
-        configureDataSource()
         configureNavigationItem()
-        //fetchedResultsController.delegate = self
-        //configureSampleData()
         
-        repStore = CoreDataRepStore()
+        repStore = MockRepStore()
+        configureDataSource()
         
         cancellable = repStore.foldersPublisher.sink(receiveValue: { [weak self] folderModels in
             var newSnapshot = NSDiffableDataSourceSnapshot<SectionType, ItemType>()
@@ -69,45 +40,7 @@ class HomeViewController: UIViewController {
             }
             self?.dataSource.apply(newSnapshot)
         })
-        
-        //repStore.folders.append(FolderModel(name: "test folder", color: nil, songs: []))
-        repStore.addSongRandomly(song: SongModel(title: "I Hate The Bus", composer: "Jeanine Tesori"))
     }
-
-    /*func configureModelController() {
-        modelController = ModelController()
-    }*/
-    
-    /*func configureSampleData() {
-        let song1 = Song.init(context: modelController.persistentContainer.viewContext)
-        song1.title = "She Cries"
-        song1.composer = "Jason Robert Brown"
-        
-        let song2 = Song.init(context: modelController.persistentContainer.viewContext)
-        song2.title = "Send In The Clowns"
-        song2.composer = "Stephen Sondheim"
-        
-        let song3 = Song.init(context: modelController.persistentContainer.viewContext)
-        song3.title = "I've Found A New Baby"
-        song3.composer = "Charlie Christian"
-        
-        repBook = Folder.init(context: modelController.persistentContainer.viewContext)
-        repBook.name = "Rep Book"
-        repBook.addToSongs(song1)
-        
-        inProgress = Folder.init(context: modelController.persistentContainer.viewContext)
-        inProgress.name = "In Progress"
-        inProgress.addToSongs(song2)
-        inProgress.addToSongs(song3)
-        
-        stillToLearn = Folder.init(context: modelController.persistentContainer.viewContext)
-        stillToLearn.name = "Still To Learn"
-        
-        repFolders = RepFolders.init(context: modelController.persistentContainer.viewContext)
-        repFolders.addToFolders(repBook)
-        repFolders.addToFolders(inProgress)
-        repFolders.addToFolders(stillToLearn)
-    }*/
 }
 
 extension HomeViewController {
@@ -139,7 +72,7 @@ extension HomeViewController {
     }
     
     func configureDataSource() {
-        dataSource = DataSource(tableView: tableView, cellProvider: { [weak self] (tableView, indexPath, songModel) -> UITableViewCell? in
+        dataSource = DataSource(repStore: repStore, tableView: tableView, cellProvider: { [weak self] (tableView, indexPath, songModel) -> UITableViewCell? in
             if let cell = tableView.dequeueReusableCell(withIdentifier: self!.reuseIdentifier, for: indexPath) as? SongTableViewCell {
                 cell.textLabel?.text = songModel.title
                 cell.detailTextLabel?.text = songModel.composer
@@ -151,46 +84,42 @@ extension HomeViewController {
     
     func configureNavigationItem() {
         navigationItem.title = "Repertoire"
-        /*let addItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addSong))
-        navigationItem.rightBarButtonItem = addItem*/
+        let addItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addSong))
+        navigationItem.rightBarButtonItem = addItem
+        let editLabel = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(toggleEditing))
+        navigationItem.leftBarButtonItem = editLabel
     }
-    /*
+    
+    @objc func toggleEditing() {
+        tableView.setEditing(!tableView.isEditing, animated: true)
+    }
+    
     @objc func addSong() {
         let ac = UIAlertController(title: "Add Song", message: "Title and Composer:", preferredStyle: .alert)
         ac.addTextField()
         ac.addTextField()
-        let submitAction = UIAlertAction(title: "Done", style: .default) { [weak self, weak ac] alertAction in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let submitAction = UIAlertAction(title: "Add", style: .default) { [weak self, weak ac] alertAction in
             guard let self = self else { return }
             let songTitle = ac?.textFields![0].text ?? ""
             let songComposer = ac?.textFields![1].text ?? ""
-            let newSong = Song(context: self.modelController.persistentContainer.viewContext)
-            newSong.title = songTitle
-            newSong.composer = songComposer
-            //self.inProgress.addToSongs(newSong)
-            if let folders = self.repFolders.folders?.array as? [Folder] {
-                folders.randomElement()?.addToSongs(newSong)
-            }
-            //self.repFolders.folders = self.repFolders.folders?.reversed
-            
-            do {
-                try self.fetchedResultsController.performFetch()
-            } catch {
-                print(error.localizedDescription)
-            }
-            
-            /*do {
-                try self.viewContext.save()
-            } catch {
-                print(error.localizedDescription)
-            }*/
+            self.repStore.addSongRandomly(song: SongModel(title: songTitle, composer: songComposer))
         }
+        ac.addAction(cancelAction)
         ac.addAction(submitAction)
         present(ac, animated: true)
-    }*/
+    }
 }
 
 extension HomeViewController {
     class DataSource: UITableViewDiffableDataSource<SectionType, ItemType> {
+        var repStore: RepStore
+        
+        init(repStore: RepStore, tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<HomeViewController.SectionType, HomeViewController.ItemType>.CellProvider) {
+            self.repStore = repStore
+            super.init(tableView: tableView, cellProvider: cellProvider)
+        }
+        
         // MARK: header/footer titles support
         override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
             let snapshot = self.snapshot()
@@ -236,7 +165,6 @@ extension HomeViewController {
         }
         
         // MARK: editing support
-
         override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
             return true
         }
@@ -244,35 +172,16 @@ extension HomeViewController {
         override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
             if editingStyle == .delete {
                 if let identifierToDelete = itemIdentifier(for: indexPath) {
-                    var snapshot = self.snapshot()
+                    /*var snapshot = self.snapshot()
                     snapshot.deleteItems([identifierToDelete])
-                    apply(snapshot)
+                    apply(snapshot)*/
+                    guard let songToRemove = itemIdentifier(for: indexPath) else { return }
+                    repStore.deleteSong(song: songToRemove, from: nil)
                 }
             }
         }
     }
 }
-
-/*extension HomeViewController: NSFetchedResultsControllerDelegate {
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
-        let snapshot = snapshot as NSDiffableDataSourceSnapshot<String, NSManagedObjectID>
-        guard let repFoldersID = snapshot.itemIdentifiers.first else { return }
-        if let repFolders = try? modelController.persistentContainer.viewContext.existingObject(with: repFoldersID) as? RepFolders {
-            guard let foldersArray = repFolders.folders?.array as? [Folder] else { return }
-            
-            var newSnapshot = NSDiffableDataSourceSnapshot<SectionType, ItemType>()
-            
-            for folder in foldersArray {
-                newSnapshot.appendSections([folder.name ?? "unnamed folder"])
-                if let songs = folder.songs?.array as? [Song] {
-                    //newSnapshot.appendItems(songs.map({ $0.title ?? "unnamed song" }))
-                    newSnapshot.appendItems(songs.map({ SongModel.init(from: $0) }))
-                }
-            }
-            dataSource.apply(newSnapshot)
-        }
-    }
-}*/
 
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

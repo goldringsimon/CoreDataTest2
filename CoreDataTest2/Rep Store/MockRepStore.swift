@@ -20,12 +20,45 @@ class MockRepStore: RepStore {
         folders.append(folder)
     }
     
-    func addSong(add song: SongModel, to folder: FolderModel) {
-        
+    func addSong(add song: SongModel, to folder: FolderModel) {        
+        for (i, currentFolder) in folders.enumerated() {
+            if (currentFolder == folder) {
+                var newFolder = folder
+                newFolder.songs.append(song)
+                folders[i] = newFolder
+                break
+            }
+        }
     }
     
     func addSongRandomly(song: SongModel) {
         folders[Int.random(in: 0..<folders.count)].songs.append(song)
+    }
+    
+    @discardableResult
+    func deleteSong(song: SongModel, from folder: FolderModel? = nil) -> Bool {
+        if let folder = folder {
+            for (i, currentFolder) in folders.enumerated() {
+                if currentFolder == folder {
+                    for (j, currentSong) in currentFolder.songs.enumerated() {
+                        if currentSong == song {
+                            folders[i].songs.remove(at: j)
+                            return true
+                        }
+                    }
+                }
+            }
+        } else {
+            for (i, folder) in folders.enumerated() {
+                for (j, currentSong) in folder.songs.enumerated() {
+                    if currentSong == song {
+                        folders[i].songs.remove(at: j)
+                        return true
+                    }
+                }
+            }
+        }
+        return false
     }
     
     private func addMockData() {
@@ -38,5 +71,7 @@ class MockRepStore: RepStore {
         let stillToLearn = FolderModel(name: "Still To Learn", color: nil, songs: [])
         
         folders.append(contentsOf: [repBook, inProgress, stillToLearn])
+        
+        addSong(add: SongModel(title: "test added song", composer: "simon"), to: stillToLearn)
     }
 }

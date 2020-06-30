@@ -11,14 +11,15 @@ import CoreData
 import UIKit
 
 class CoreDataRepStore: NSObject, NSFetchedResultsControllerDelegate, RepStore {
+    func deleteSong(song: SongModel, from folder: FolderModel?) -> Bool {
+        return false
+    }
+    
     @Published private var folders: [FolderModel] = []
     var foldersPublisher: Published<[FolderModel]>.Publisher { $folders }
     
     private var repFolders: ManagedRepFolders!
     var modelController: ModelController!
-    
-    typealias SectionType = String
-    typealias ItemType = SongModel
     
     lazy private var fetchedResultsController: NSFetchedResultsController<ManagedRepFolders> = {
         let fetchRequest: NSFetchRequest<ManagedRepFolders> = ManagedRepFolders.fetchRequest()
@@ -91,6 +92,16 @@ class CoreDataRepStore: NSObject, NSFetchedResultsControllerDelegate, RepStore {
         folder.songs = NSOrderedSet(array: model.songs.map({ createSong(fromModel:$0) }))
     }
     
+    func updateOrCreateSong(fromModel model: SongModel) {
+      if model.id == nil {
+        createSong(fromModel: model)
+      } else {
+        //updateSong(fromModel: model)
+      }
+      //try? persistentContainer.viewContext.save()
+      //updateSongs()
+    }
+    
     func addFolder(folder: FolderModel) {
         
     }
@@ -100,7 +111,15 @@ class CoreDataRepStore: NSObject, NSFetchedResultsControllerDelegate, RepStore {
     }
     
     func addSongRandomly(song: SongModel) {
-        
+        if let managedFolders = repFolders.folders?.array as? [ManagedFolder] {
+            let newSong = createSong(fromModel: song)
+            managedFolders.randomElement()?.addToSongs(newSong)
+        }
+        updateFetchRequest()
+    }
+    
+    private func updateFetchRequest() {
+        try? fetchedResultsController.performFetch()
     }
     
     /*func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
