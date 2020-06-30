@@ -172,11 +172,7 @@ extension HomeViewController {
         override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
             if editingStyle == .delete {
                 if let identifierToDelete = itemIdentifier(for: indexPath) {
-                    /*var snapshot = self.snapshot()
-                    snapshot.deleteItems([identifierToDelete])
-                    apply(snapshot)*/
-                    guard let songToRemove = itemIdentifier(for: indexPath) else { return }
-                    repStore.deleteSong(song: songToRemove, from: nil)
+                    repStore.deleteSong(song: identifierToDelete, from: nil)
                 }
             }
         }
@@ -184,12 +180,12 @@ extension HomeViewController {
 }
 
 extension HomeViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    /*func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let newAction = UIContextualAction(style: .normal, title: "Action") { (action, sourceView, completion) in
             
         }
         return UISwipeActionsConfiguration(actions: [newAction])
-    }
+    }*/
     
     /*func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader")
