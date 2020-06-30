@@ -20,8 +20,12 @@ class MockRepStore: RepStore {
         folders.append(folder)
     }
     
-    func addSong(song: SongModel) {
+    func addSong(add song: SongModel, to folder: FolderModel) {
         
+    }
+    
+    func addSongRandomly(song: SongModel) {
+        folders[Int.random(in: 0..<folders.count)].songs.append(song)
     }
     
     private func addMockData() {

@@ -9,7 +9,7 @@
 import Foundation
 
 struct SongModel: Hashable {
-    private var song: Song? = nil
+    var id: UUID?
     var title: String
     var composer: String
     
@@ -20,8 +20,7 @@ struct SongModel: Hashable {
 }
 
 extension SongModel {
-    init(from song: Song) {
-        self.song = song
+    init(from song: ManagedSong) {
         self.title = song.title ?? ""
         self.composer = song.composer ?? ""
     }

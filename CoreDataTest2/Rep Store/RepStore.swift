@@ -14,11 +14,8 @@ protocol ReadableRepStore {
 
 protocol WriteableRepStore {
     func addFolder(folder: FolderModel)
-    func addSong(song: SongModel)
+    func addSong(add song: SongModel, to folder: FolderModel)
+    func addSongRandomly(song: SongModel)
 }
 
 typealias RepStore = ReadableRepStore & WriteableRepStore
-
-/*class RepStoreBase: ObservableObject {
-    @Published var folders: [FolderModel] = []
-}*/

@@ -71,7 +71,7 @@ class HomeViewController: UIViewController {
         })
         
         //repStore.folders.append(FolderModel(name: "test folder", color: nil, songs: []))
-        
+        repStore.addSongRandomly(song: SongModel(title: "I Hate The Bus", composer: "Jeanine Tesori"))
     }
 
     /*func configureModelController() {

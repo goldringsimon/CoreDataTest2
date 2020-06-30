@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Folder" representedClassName="Folder" syncable="YES">
+    <entity name="ManagedFolder" representedClassName="ManagedFolder" syncable="YES">
         <attribute name="color" optional="YES" attributeType="Transformable"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="repFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RepFolders" inverseName="folders" inverseEntity="RepFolders"/>
-        <relationship name="songs" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Song" inverseName="folder" inverseEntity="Song"/>
+        <relationship name="repFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedRepFolders" inverseName="folders" inverseEntity="ManagedRepFolders"/>
+        <relationship name="songs" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ManagedSong" inverseName="folder" inverseEntity="ManagedSong"/>
     </entity>
-    <entity name="RepFolders" representedClassName="RepFolders" syncable="YES">
-        <relationship name="folders" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Folder" inverseName="repFolder" inverseEntity="Folder"/>
+    <entity name="ManagedRepFolders" representedClassName="ManagedRepFolders" syncable="YES">
+        <relationship name="folders" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ManagedFolder" inverseName="repFolder" inverseEntity="ManagedFolder"/>
     </entity>
-    <entity name="Song" representedClassName="Song" syncable="YES">
+    <entity name="ManagedSong" representedClassName="ManagedSong" syncable="YES">
         <attribute name="composer" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="folder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="songs" inverseEntity="Folder"/>
+        <relationship name="folder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedFolder" inverseName="songs" inverseEntity="ManagedFolder"/>
     </entity>
     <elements>
-        <element name="Song" positionX="-63" positionY="-18" width="128" height="88"/>
-        <element name="Folder" positionX="-54" positionY="9" width="128" height="103"/>
-        <element name="RepFolders" positionX="-45" positionY="36" width="128" height="58"/>
+        <element name="ManagedFolder" positionX="-54" positionY="9" width="128" height="118"/>
+        <element name="ManagedRepFolders" positionX="-45" positionY="36" width="128" height="58"/>
+        <element name="ManagedSong" positionX="-63" positionY="-18" width="128" height="103"/>
     </elements>
 </model>

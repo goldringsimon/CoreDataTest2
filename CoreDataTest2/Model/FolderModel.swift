@@ -10,16 +10,17 @@ import Foundation
 import UIKit
 
 struct FolderModel: Hashable {
+    var id: UUID?
     public var name: String
     public var color: UIColor?
     public var songs: [SongModel]
 }
 
 extension FolderModel {
-    init(from folder: Folder) {
+    init(from folder: ManagedFolder) {
         self.name = folder.name ?? ""
         self.color = folder.color as? UIColor
-        if let songs = folder.songs?.array as? [Song] {
+        if let songs = folder.songs?.array as? [ManagedSong] {
             self.songs = songs.map({ SongModel(from: $0) })
         } else {
             self.songs = []

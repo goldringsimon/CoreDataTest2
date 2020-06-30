@@ -10,18 +10,18 @@ import Foundation
 import CoreData
 import UIKit
 
-class CoreDataRepStore: RepStore {
+class CoreDataRepStore: NSObject, NSFetchedResultsControllerDelegate, RepStore {
     @Published private var folders: [FolderModel] = []
     var foldersPublisher: Published<[FolderModel]>.Publisher { $folders }
     
-    private var repFolders: RepFolders!
+    private var repFolders: ManagedRepFolders!
     var modelController: ModelController!
     
     typealias SectionType = String
     typealias ItemType = SongModel
     
-    lazy var fetchedResultsController: NSFetchedResultsController<RepFolders> = {
-        let fetchRequest: NSFetchRequest<RepFolders> = RepFolders.fetchRequest()
+    lazy var fetchedResultsController: NSFetchedResultsController<ManagedRepFolders> = {
+        let fetchRequest: NSFetchRequest<ManagedRepFolders> = ManagedRepFolders.fetchRequest()
         //fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         fetchRequest.sortDescriptors = []
         
@@ -39,7 +39,8 @@ class CoreDataRepStore: RepStore {
         return controller
     }()
     
-    init() {
+    override init() {
+        super.init()
         modelController = ModelController()
     }
     
@@ -47,34 +48,36 @@ class CoreDataRepStore: RepStore {
         
     }
     
-    func addSong(song: SongModel) {
+    func addSong(add song: SongModel, to folder: FolderModel) {
         
     }
     
-    private class fetchedResultsControllerDelegate: NSObject, NSFetchedResultsControllerDelegate {
-        /*func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
-            let snapshot = snapshot as NSDiffableDataSourceSnapshot<String, NSManagedObjectID>
-            guard let repFoldersID = snapshot.itemIdentifiers.first else { return }
-            if let repFolders = try? modelController.persistentContainer.viewContext.existingObject(with: repFoldersID) as? RepFolders {
-                guard let foldersArray = repFolders.folders?.array as? [Folder] else { return }
-                
-                var newSnapshot = NSDiffableDataSourceSnapshot<SectionType, ItemType>()
-                
-                for folder in foldersArray {
-                    newSnapshot.appendSections([folder.name ?? "unnamed folder"])
-                    if let songs = folder.songs?.array as? [Song] {
-                        //newSnapshot.appendItems(songs.map({ $0.title ?? "unnamed song" }))
-                        newSnapshot.appendItems(songs.map({ SongModel.init(from: $0) }))
-                    }
+    func addSongRandomly(song: SongModel) {
+        
+    }
+    
+    /*func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
+        let snapshot = snapshot as NSDiffableDataSourceSnapshot<String, NSManagedObjectID>
+        guard let repFoldersID = snapshot.itemIdentifiers.first else { return }
+        if let repFolders = try? modelController.persistentContainer.viewContext.existingObject(with: repFoldersID) as? RepFolders {
+            guard let foldersArray = repFolders.folders?.array as? [Folder] else { return }
+            
+            var newSnapshot = NSDiffableDataSourceSnapshot<SectionType, ItemType>()
+            
+            for folder in foldersArray {
+                newSnapshot.appendSections([folder.name ?? "unnamed folder"])
+                if let songs = folder.songs?.array as? [Song] {
+                    //newSnapshot.appendItems(songs.map({ $0.title ?? "unnamed song" }))
+                    newSnapshot.appendItems(songs.map({ SongModel.init(from: $0) }))
                 }
-                //dataSource.apply(newSnapshot)
             }
-        }*/
-        func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-            if let repFolders = anObject as? RepFolders {
-                if let foldersArray = repFolders.folders?.array as? [Folder] {
-                    //folders = foldersArray.map({ FolderModel(from: $0) })
-                }
+            //dataSource.apply(newSnapshot)
+        }
+    }*/
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        if let repFolders = anObject as? ManagedRepFolders {
+            if let foldersArray = repFolders.folders?.array as? [ManagedFolder] {
+                folders = foldersArray.map({ FolderModel(from: $0) })
             }
         }
     }
