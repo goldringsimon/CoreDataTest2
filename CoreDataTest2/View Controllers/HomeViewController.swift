@@ -28,7 +28,7 @@ class HomeViewController: UIViewController {
         configureHierarchy()
         configureNavigationItem()
         
-        repStore = MockRepStore()
+        repStore = CoreDataRepStore()
         configureDataSource()
         
         cancellable = repStore.foldersPublisher.sink(receiveValue: { [weak self] folderModels in

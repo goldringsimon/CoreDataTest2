@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="ManagedDocument" representedClassName="ManagedDocument" syncable="YES" codeGenerationType="class">
+    <entity name="ManagedDocument" representedClassName="ManagedDocument" syncable="YES">
         <attribute name="document" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="song" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedSong" inverseName="documents" inverseEntity="ManagedSong"/>
@@ -12,12 +12,12 @@
         <relationship name="repFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedRepFolders" inverseName="folders" inverseEntity="ManagedRepFolders"/>
         <relationship name="songs" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ManagedSong" inverseName="folder" inverseEntity="ManagedSong"/>
     </entity>
-    <entity name="ManagedImage" representedClassName="ManagedImage" syncable="YES" codeGenerationType="class">
+    <entity name="ManagedImage" representedClassName="ManagedImage" syncable="YES">
         <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="song" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedSong" inverseName="images" inverseEntity="ManagedSong"/>
     </entity>
-    <entity name="ManagedRecording" representedClassName="ManagedRecording" syncable="YES" codeGenerationType="class">
+    <entity name="ManagedRecording" representedClassName="ManagedRecording" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="recording" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <relationship name="song" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedSong" inverseName="recordings" inverseEntity="ManagedSong"/>
@@ -35,11 +35,11 @@
         <relationship name="recordings" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ManagedRecording" inverseName="song" inverseEntity="ManagedRecording"/>
     </entity>
     <elements>
+        <element name="ManagedDocument" positionX="20.71484375" positionY="198.265625" width="128" height="88"/>
         <element name="ManagedFolder" positionX="-217.3046875" positionY="-192.4921875" width="128" height="118"/>
-        <element name="ManagedRepFolders" positionX="-232.5625" positionY="-327.59765625" width="128" height="58"/>
-        <element name="ManagedSong" positionX="-213.1171875" positionY="-19.578125" width="128" height="148"/>
         <element name="ManagedImage" positionX="-389.5390625" positionY="195.82421875" width="128" height="88"/>
         <element name="ManagedRecording" positionX="-199.8203125" positionY="201.4375" width="128" height="88"/>
-        <element name="ManagedDocument" positionX="20.71484375" positionY="198.265625" width="128" height="88"/>
+        <element name="ManagedRepFolders" positionX="-232.5625" positionY="-327.59765625" width="128" height="58"/>
+        <element name="ManagedSong" positionX="-213.1171875" positionY="-19.578125" width="128" height="148"/>
     </elements>
 </model>

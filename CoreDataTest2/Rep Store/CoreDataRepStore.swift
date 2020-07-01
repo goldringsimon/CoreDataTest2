@@ -11,14 +11,10 @@ import CoreData
 import UIKit
 
 class CoreDataRepStore: NSObject, NSFetchedResultsControllerDelegate, RepStore {
-    func deleteSong(song: SongModel, from folder: FolderModel?) -> Bool {
-        return false
-    }
-    
     @Published private var folders: [FolderModel] = []
     var foldersPublisher: Published<[FolderModel]>.Publisher { $folders }
     
-    private var repFolders: ManagedRepFolders!
+    private var repFolders: ManagedRepFolders?
     var modelController: ModelController!
     
     lazy private var fetchedResultsController: NSFetchedResultsController<ManagedRepFolders> = {
@@ -48,6 +44,7 @@ class CoreDataRepStore: NSObject, NSFetchedResultsControllerDelegate, RepStore {
         context = modelController.persistentContainer.viewContext
         fetchedResultsController.delegate = self
         addMockData()
+        //updateFetchRequest()
     }
     
     private func addMockData() {
@@ -59,10 +56,11 @@ class CoreDataRepStore: NSObject, NSFetchedResultsControllerDelegate, RepStore {
         let inProgress = createFolder(fromModel: FolderModel(name: "In Progress", color: nil, songs: [song2, song3]))
         let stillToLearn = createFolder(fromModel: FolderModel(name: "Still To Learn", color: nil, songs: []))
         
-        repFolders = ManagedRepFolders.init(context: modelController.persistentContainer.viewContext)
+        let repFolders = ManagedRepFolders.init(context: modelController.persistentContainer.viewContext)
         repFolders.addToFolders(repBook)
         repFolders.addToFolders(inProgress)
         repFolders.addToFolders(stillToLearn)
+        print("rep books folder id is \(repBook.id)")
     }
     
     @discardableResult
@@ -83,6 +81,8 @@ class CoreDataRepStore: NSObject, NSFetchedResultsControllerDelegate, RepStore {
         let folder = ManagedFolder(context: context)
         folder.id = UUID()
         apply(model: model, to: folder)
+        print(folder.name ?? "empty name")
+        print(folder.id ?? "nil")
         return folder
     }
     
@@ -103,7 +103,7 @@ class CoreDataRepStore: NSObject, NSFetchedResultsControllerDelegate, RepStore {
     }
     
     func addFolder(folder: FolderModel) {
-        
+        repFolders?.addToFolders(createFolder(fromModel: folder))
     }
     
     func addSong(add song: SongModel, to folder: FolderModel) {
@@ -111,11 +111,43 @@ class CoreDataRepStore: NSObject, NSFetchedResultsControllerDelegate, RepStore {
     }
     
     func addSongRandomly(song: SongModel) {
-        if let managedFolders = repFolders.folders?.array as? [ManagedFolder] {
+        if let managedFolders = repFolders?.folders?.array as? [ManagedFolder] {
             let newSong = createSong(fromModel: song)
             managedFolders.randomElement()?.addToSongs(newSong)
         }
         updateFetchRequest()
+    }
+    
+    func deleteSong(song: SongModel, from folder: FolderModel?) -> Bool {
+        defer {
+            updateFetchRequest()
+        }
+        if let folder = folder {
+            guard let foldersArray = repFolders?.folders?.array as? [ManagedFolder] else { return false }
+            for currentFolder in foldersArray {
+                if currentFolder.id == folder.id {
+                    guard let songsArray = currentFolder.songs?.array as? [ManagedSong] else { return false }
+                    for currentSong in songsArray {
+                        if currentSong.id == song.id {
+                            currentFolder.removeFromSongs(currentSong)
+                            return true
+                        }
+                    }
+                }
+            }
+        } else {
+            guard let foldersArray = repFolders?.folders?.array as? [ManagedFolder] else { return false }
+            for currentFolder in foldersArray {
+                guard let songsArray = currentFolder.songs?.array as? [ManagedSong] else { return false }
+                for currentSong in songsArray {
+                    if currentSong.id == song.id {
+                        currentFolder.removeFromSongs(currentSong)
+                        return true
+                    }
+                }
+            }
+        }
+        return false
     }
     
     private func updateFetchRequest() {
@@ -141,10 +173,27 @@ class CoreDataRepStore: NSObject, NSFetchedResultsControllerDelegate, RepStore {
         }
     }*/
     
+    /*func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        if let fetchedRepFolders = controller.fetchedObjects?.first as? ManagedRepFolders {
+            repFolders = fetchedRepFolders
+            guard let foldersArray = repFolders?.folders?.array as? [ManagedFolder] else { return }
+            folders = foldersArray.map(FolderModel.init)
+        }
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        if let fetchedRepFolders = controller.fetchedObjects?.first as? ManagedRepFolders {
+            repFolders = fetchedRepFolders
+            guard let foldersArray = repFolders?.folders?.array as? [ManagedFolder] else { return }
+            folders = foldersArray.map(FolderModel.init)
+        }
+    }*/
+    
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
         let snapshot = snapshot as NSDiffableDataSourceSnapshot<String, NSManagedObjectID>
         guard let repFoldersID = snapshot.itemIdentifiers.first else { return }
         if let repFolders = try? modelController.persistentContainer.viewContext.existingObject(with: repFoldersID) as? ManagedRepFolders {
+            self.repFolders = repFolders
             guard let foldersArray = repFolders.folders?.array as? [ManagedFolder] else { return }
             folders = foldersArray.map(FolderModel.init)
         }
