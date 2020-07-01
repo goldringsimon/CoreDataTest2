@@ -11,8 +11,14 @@
 		F40F6BBA24AB83CB005D0F4D /* ManagedRepFolders+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40F6BB424AB83CB005D0F4D /* ManagedRepFolders+CoreDataProperties.swift */; };
 		F40F6BBB24AB83CB005D0F4D /* ManagedFolder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40F6BB524AB83CB005D0F4D /* ManagedFolder+CoreDataClass.swift */; };
 		F40F6BBC24AB83CB005D0F4D /* ManagedFolder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40F6BB624AB83CB005D0F4D /* ManagedFolder+CoreDataProperties.swift */; };
-		F40F6BBD24AB83CB005D0F4D /* ManagedSong+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40F6BB724AB83CB005D0F4D /* ManagedSong+CoreDataClass.swift */; };
-		F40F6BBE24AB83CB005D0F4D /* ManagedSong+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40F6BB824AB83CB005D0F4D /* ManagedSong+CoreDataProperties.swift */; };
+		F40F6BD824AC997C005D0F4D /* ManagedSong+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40F6BD024AC997C005D0F4D /* ManagedSong+CoreDataClass.swift */; };
+		F40F6BD924AC997C005D0F4D /* ManagedSong+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40F6BD124AC997C005D0F4D /* ManagedSong+CoreDataProperties.swift */; };
+		F40F6BDA24AC997C005D0F4D /* ManagedRecording+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40F6BD224AC997C005D0F4D /* ManagedRecording+CoreDataClass.swift */; };
+		F40F6BDB24AC997C005D0F4D /* ManagedRecording+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40F6BD324AC997C005D0F4D /* ManagedRecording+CoreDataProperties.swift */; };
+		F40F6BDC24AC997C005D0F4D /* ManagedDocument+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40F6BD424AC997C005D0F4D /* ManagedDocument+CoreDataClass.swift */; };
+		F40F6BDD24AC997C005D0F4D /* ManagedDocument+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40F6BD524AC997C005D0F4D /* ManagedDocument+CoreDataProperties.swift */; };
+		F40F6BDE24AC997C005D0F4D /* ManagedImage+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40F6BD624AC997C005D0F4D /* ManagedImage+CoreDataClass.swift */; };
+		F40F6BDF24AC997C005D0F4D /* ManagedImage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40F6BD724AC997C005D0F4D /* ManagedImage+CoreDataProperties.swift */; };
 		F4BEC62024A8993E000C5418 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BEC61F24A8993E000C5418 /* AppDelegate.swift */; };
 		F4BEC62224A8993E000C5418 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BEC62124A8993E000C5418 /* SceneDelegate.swift */; };
 		F4BEC62424A8993E000C5418 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BEC62324A8993E000C5418 /* HomeViewController.swift */; };
@@ -33,8 +39,14 @@
 		F40F6BB424AB83CB005D0F4D /* ManagedRepFolders+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedRepFolders+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		F40F6BB524AB83CB005D0F4D /* ManagedFolder+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedFolder+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		F40F6BB624AB83CB005D0F4D /* ManagedFolder+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedFolder+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		F40F6BB724AB83CB005D0F4D /* ManagedSong+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedSong+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		F40F6BB824AB83CB005D0F4D /* ManagedSong+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedSong+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		F40F6BD024AC997C005D0F4D /* ManagedSong+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedSong+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		F40F6BD124AC997C005D0F4D /* ManagedSong+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedSong+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		F40F6BD224AC997C005D0F4D /* ManagedRecording+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedRecording+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		F40F6BD324AC997C005D0F4D /* ManagedRecording+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedRecording+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		F40F6BD424AC997C005D0F4D /* ManagedDocument+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedDocument+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		F40F6BD524AC997C005D0F4D /* ManagedDocument+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedDocument+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		F40F6BD624AC997C005D0F4D /* ManagedImage+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedImage+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		F40F6BD724AC997C005D0F4D /* ManagedImage+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedImage+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		F4BEC61C24A8993E000C5418 /* CoreDataTest2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreDataTest2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4BEC61F24A8993E000C5418 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F4BEC62124A8993E000C5418 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +75,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F40F6BBF24AC9759005D0F4D /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F4BEC62324A8993E000C5418 /* HomeViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
 		F4BEC61324A8993E000C5418 = {
 			isa = PBXGroup;
 			children = (
@@ -85,9 +105,9 @@
 				F4C4E4CA24AB487500A5F4A4 /* Model */,
 				F4BEC63824A8999F000C5418 /* Managed Classes */,
 				F4C4E4C924AB471C00A5F4A4 /* Rep Store */,
+				F40F6BBF24AC9759005D0F4D /* View Controllers */,
 				F4BEC61F24A8993E000C5418 /* AppDelegate.swift */,
 				F4BEC62124A8993E000C5418 /* SceneDelegate.swift */,
-				F4BEC62324A8993E000C5418 /* HomeViewController.swift */,
 				F4BEC63624A8999A000C5418 /* ModelController.swift */,
 				F4BEC62524A8993E000C5418 /* Main.storyboard */,
 				F4BEC62B24A8993F000C5418 /* Assets.xcassets */,
@@ -101,12 +121,18 @@
 		F4BEC63824A8999F000C5418 /* Managed Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F40F6BD024AC997C005D0F4D /* ManagedSong+CoreDataClass.swift */,
+				F40F6BD124AC997C005D0F4D /* ManagedSong+CoreDataProperties.swift */,
+				F40F6BD224AC997C005D0F4D /* ManagedRecording+CoreDataClass.swift */,
+				F40F6BD324AC997C005D0F4D /* ManagedRecording+CoreDataProperties.swift */,
+				F40F6BD424AC997C005D0F4D /* ManagedDocument+CoreDataClass.swift */,
+				F40F6BD524AC997C005D0F4D /* ManagedDocument+CoreDataProperties.swift */,
+				F40F6BD624AC997C005D0F4D /* ManagedImage+CoreDataClass.swift */,
+				F40F6BD724AC997C005D0F4D /* ManagedImage+CoreDataProperties.swift */,
 				F40F6BB324AB83CB005D0F4D /* ManagedRepFolders+CoreDataClass.swift */,
 				F40F6BB424AB83CB005D0F4D /* ManagedRepFolders+CoreDataProperties.swift */,
 				F40F6BB524AB83CB005D0F4D /* ManagedFolder+CoreDataClass.swift */,
 				F40F6BB624AB83CB005D0F4D /* ManagedFolder+CoreDataProperties.swift */,
-				F40F6BB724AB83CB005D0F4D /* ManagedSong+CoreDataClass.swift */,
-				F40F6BB824AB83CB005D0F4D /* ManagedSong+CoreDataProperties.swift */,
 			);
 			path = "Managed Classes";
 			sourceTree = "<group>";
@@ -201,13 +227,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F40F6BDE24AC997C005D0F4D /* ManagedImage+CoreDataClass.swift in Sources */,
+				F40F6BDF24AC997C005D0F4D /* ManagedImage+CoreDataProperties.swift in Sources */,
 				F4BEC62424A8993E000C5418 /* HomeViewController.swift in Sources */,
 				F4C4E4C824AB470B00A5F4A4 /* MockRepStore.swift in Sources */,
+				F40F6BDA24AC997C005D0F4D /* ManagedRecording+CoreDataClass.swift in Sources */,
 				F4C4E4C624AB46FC00A5F4A4 /* CoreDataRepStore.swift in Sources */,
+				F40F6BDC24AC997C005D0F4D /* ManagedDocument+CoreDataClass.swift in Sources */,
 				F4BEC63724A8999A000C5418 /* ModelController.swift in Sources */,
+				F40F6BDD24AC997C005D0F4D /* ManagedDocument+CoreDataProperties.swift in Sources */,
+				F40F6BDB24AC997C005D0F4D /* ManagedRecording+CoreDataProperties.swift in Sources */,
 				F4C4E4C424AB428300A5F4A4 /* RepStore.swift in Sources */,
 				F40F6BBB24AB83CB005D0F4D /* ManagedFolder+CoreDataClass.swift in Sources */,
-				F40F6BBD24AB83CB005D0F4D /* ManagedSong+CoreDataClass.swift in Sources */,
+				F40F6BD824AC997C005D0F4D /* ManagedSong+CoreDataClass.swift in Sources */,
 				F4C4E4CC24AB489300A5F4A4 /* SongModel.swift in Sources */,
 				F40F6BBC24AB83CB005D0F4D /* ManagedFolder+CoreDataProperties.swift in Sources */,
 				F4C4E4CE24AB5D9700A5F4A4 /* FolderModel.swift in Sources */,
@@ -215,7 +247,7 @@
 				F40F6BB924AB83CB005D0F4D /* ManagedRepFolders+CoreDataClass.swift in Sources */,
 				F4BEC62224A8993E000C5418 /* SceneDelegate.swift in Sources */,
 				F4BEC62A24A8993E000C5418 /* CoreDataTest2.xcdatamodeld in Sources */,
-				F40F6BBE24AB83CB005D0F4D /* ManagedSong+CoreDataProperties.swift in Sources */,
+				F40F6BD924AC997C005D0F4D /* ManagedSong+CoreDataProperties.swift in Sources */,
 				F40F6BBA24AB83CB005D0F4D /* ManagedRepFolders+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

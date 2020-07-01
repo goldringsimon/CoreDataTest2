@@ -1,5 +1,5 @@
 //
-//  ManagedSong+CoreDataClass.swift
+//  ManagedImage+CoreDataClass.swift
 //  CoreDataTest2
 //
 //  Created by Simon Goldring on 7/1/20.
@@ -10,7 +10,7 @@
 import Foundation
 import CoreData
 
-@objc(ManagedSong)
-public class ManagedSong: NSManagedObject {
+@objc(ManagedImage)
+public class ManagedImage: NSManagedObject {
 
 }
